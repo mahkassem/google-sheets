@@ -1,0 +1,50 @@
+<!-- fetch request to http://localhost:3000/api/contact-message -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+</head>
+
+<body>
+  <section id="data">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Company Size</th>
+          <th>Message</th>
+        </tr>
+      </thead>
+      <tbody id="data-body">
+      </tbody>
+    </table>
+  </section>
+  <script>
+    const dataBody = document.getElementById('data-body');
+    const endpoint = 'http://localhost:3000/api/contact-message';
+
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        data.data.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item[0]}</td>
+            <td>${item[1]}</td>
+            <td>${item[2]}</td>
+            <td>${item[3]}</td>
+            <td>${item[4]}</td>
+          `;
+          dataBody.appendChild(row);
+        });
+      });
+  </script>
+</body>
+
+</html>
