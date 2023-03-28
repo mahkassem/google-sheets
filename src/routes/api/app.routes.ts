@@ -8,6 +8,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/contact-message', sendMessage);
-router.get('/contact-message', getMessages);
+// router.get('/contact-message', getMessages);
 
 export default router;
