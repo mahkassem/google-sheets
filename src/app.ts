@@ -15,6 +15,7 @@ app.use(json());
 app.use(cors({
   origin: [
     '*', // allow all
+    'http://localhost:3000', // allow specific origin
     'http://127.0.0.1:5500', // allow specific origin
     'https://moolapay.io'
   ],
