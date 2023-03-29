@@ -2,12 +2,18 @@ import { Request, Response } from "express";
 import { GoogleSheetProvider } from "../../providers/google-sheet.provider";
 import { sendMail } from "../../services/mail.service";
 import { ContactMessageMail } from "../../templates/contact-message.mail";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+
+const env = process.env.ENV || 'dev';
 
 export const sendMessage = async (req: Request, res: Response) => {
   try {
     // validate recaptcha
     if (req?.recaptcha?.error)
-      return res.status(400).send({ message: "error_recaptcha" });
+      return res.status(400).send({ message: "error_recaptcha", error: env === 'dev' ? req.recaptcha.error : null });
 
     const { name, email, phone, company_size, message } = req.body;
     // validate required fields
