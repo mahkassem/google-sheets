@@ -4,21 +4,28 @@ import router from './routes';
 import logger from './utils/logger';
 import helmet from 'helmet';
 import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const env = process.env.ENV || 'dev';
+const port = process.env.PORT || 3000;
 app.use(helmet());
 
 app.use(urlencoded({ extended: true }));
 app.use(json());
 
 app.use(cors({
-  origin: [
-    '*', // allow all
-    'http://localhost:3000', // allow specific origin
-    'http://127.0.0.1:5500', // allow specific origin
-    'https://moolapay.io'
-  ],
+  origin: env === 'dev' ? // if dev
+    [
+      '*', // allow all
+      'http://localhost:3000', // allow specific origin
+      'http://127.0.0.1:5500', // allow specific origin
+      'https://moolapay.io'
+    ]
+    : // else
+    'https://moolapay.io',
 }));
 
 app.use(router);
