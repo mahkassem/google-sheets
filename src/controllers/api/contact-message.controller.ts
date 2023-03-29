@@ -5,6 +5,10 @@ import { ContactMessageMail } from "../../templates/contact-message.mail";
 
 export const sendMessage = async (req: Request, res: Response) => {
   try {
+    // validate recaptcha
+    if (req?.recaptcha?.error)
+      return res.status(400).send({ message: "error_recaptcha" });
+
     const { name, email, phone, company_size, message } = req.body;
     // validate required fields
     if (!name || !email || !phone || !message)
