@@ -17,10 +17,10 @@ export const sendMessage = async (req: Request, res: Response) => {
 
     const { name, email, phone, company_size, message } = req.body;
     // validate required fields
-    if (!name || !email || !phone || !message)
+    if (!name || !email || !phone)
       return res.status(400).send({ message: "error_required_fields" });
     // validate fields not empty
-    if (!name.trim() || !email.trim() || !phone.trim() || !company_size.trim() || !message.trim())
+    if (!name.trim() || !email.trim() || !phone.trim())
       return res.status(400).send({ message: "error_no_empty_fields" });
     // validate email
     const re = /\S+@\S+\.\S+/;

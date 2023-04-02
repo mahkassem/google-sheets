@@ -25,7 +25,7 @@ export const ContactMessageMail = (req: Request) => ({
     </tr>
     <tr>
       <td>Message</td>
-      <td>${req.body.message}</td>
+      <td>${req.body.message ?? ''}</td>
     </tr>
   `
 })
