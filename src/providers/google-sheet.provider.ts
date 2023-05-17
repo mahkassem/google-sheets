@@ -16,6 +16,7 @@ export class GoogleSheetProvider {
 
   // range
   private range = 'ContactMessage!A2:G';
+  private range2 = 'ContactMessageCompany!A2:G';
 
   constructor() {
     this.auth = new google.auth.GoogleAuth({
@@ -41,6 +42,22 @@ export class GoogleSheetProvider {
     message.push(utcDate);
     const res = await this.sheets.spreadsheets.values.append({
       range: this.range,
+      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      valueInputOption: 'USER_ENTERED',
+      requestBody: {
+        values: [message],
+      }
+    });
+
+    return res.data;
+  }
+
+  public async addCompanyMessage(message: [string, string, string, string, string]) {
+    // append message to the end of the sheet
+    const utcDate = DateTime.utc().toFormat('yyyy-MM-dd HH:mm:ss');
+    message.push(utcDate);
+    const res = await this.sheets.spreadsheets.values.append({
+      range: this.range2,
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
       valueInputOption: 'USER_ENTERED',
       requestBody: {

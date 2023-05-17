@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/contact-message', verifyRecaptcha, sendMessage);
+router.post('/company-contact-message', sendCompanyMessage);
 // router.get('/contact-message', getMessages);
 
 export default router;

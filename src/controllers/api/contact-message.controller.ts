@@ -46,6 +46,33 @@ export const sendMessage = async (req: Request, res: Response) => {
   }
 };
 
+export const sendCompanyMessage = async (req: Request, res: Response) => {
+  try {
+
+    const { name, email, title, category, message } = req.body;
+    // validate required fields
+    if (!name || !email || !title)
+      return res.status(400).send({ message: "error_required_fields" });
+    // validate fields not empty
+    if (!name.trim() || !email.trim() || !title.trim())
+      return res.status(400).send({ message: "error_no_empty_fields" });
+    // validate email
+    const re = /\S+@\S+\.\S+/;
+    if (!re.test(email))
+      return res.status(400).send({ message: "error_invalid_email" });
+
+    // save to google sheet
+    const googleSheets = new GoogleSheetProvider();
+    await googleSheets.addCompanyMessage([name, email, title, category, message]);
+
+    res.send({ message: "OK" });
+    return;
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).send({ message: "server_error" });
+  }
+};
+
 export const getMessages = async (req: Request, res: Response) => {
   try {
     const googleSheets = new GoogleSheetProvider();
