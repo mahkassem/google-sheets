@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   return res.send('Hello World!');
 });
 
-// router.post('/contact-message', verifyRecaptcha, sendMessage);
+router.post('/contact-message', verifyRecaptcha, sendMessage);
 router.post('/company-contact-message', sendCompanyMessage);
 // router.get('/contact-message', getMessages);
 
